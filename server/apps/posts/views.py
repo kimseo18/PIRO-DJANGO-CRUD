@@ -27,6 +27,20 @@ def posts_create(request, *args, **kwargs):
         return redirect("/")
     return render(request, "posts/posts_create.html")
 
+def posts_update(request, pk, *args, **kwagrs):
+    post=Post.objects.get(id=pk)
+
+    if request.method=="POST":
+        post.title=request.POST["title"]
+        post.user=request.POST["user"]
+        post.region=request.POST["region"]
+        post.price=request.POST["price"]
+        post.content=request.POST["content"]
+        post.save()
+        return redirect(f"/posts/{post.id}")
+
+    return render(request, "posts/posts_update.html",{"post":post})
+
 def posts_delete(request, pk, *args, **kwargs):
     if request.method=="POST":
         post=Post.objects.get(id=pk)
