@@ -28,4 +28,7 @@ def posts_create(request, *args, **kwargs):
     return render(request, "posts/posts_create.html")
 
 def posts_delete(request, pk, *args, **kwargs):
+    if request.method=="POST":
+        post=Post.objects.get(id=pk)
+        post.delete()
     return redirect("/")
