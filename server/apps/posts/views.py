@@ -6,7 +6,12 @@ def hello_world(request, *args, **kwargs):
     return render(request, "posts/hello_world.html")
 
 def posts_list(request, *args, **kwargs):
-    posts = Post.objects.all()
+    text=request.GET.get("text")
+    posts=Post.objects.all()
+
+    if text:
+        posts=posts.filter(content__contains=text)
+
     return render(request, "posts/posts_list.html",{"posts":posts})
 
 def posts_retrieve(request, pk, *args, **kwargs):
